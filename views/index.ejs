@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('link') %>
+    <title>Home</title>
+</head>
+<body>
+    <%- include('navbar') %>
+    <div class="container-fluid">
+        <% products.forEach(product => { %>
+            <div class="card" style="width: 18rem;">
+                <img src="<%= product.pImage %>" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title"><%= product.pName %></h5>
+                    <p class="card-text"><%= product.pDescription %></p>
+                    <a href="/addToCart/:<%= product.id %>" class="btn btn-primary">Add to cart</a>
+                    <a href="/buyNow/:<%= product.id %>" class="btn btn-success">Buy now</a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
