@@ -1,11 +1,13 @@
 <nav class="navbar navbar-light bg-light bg-body-tertiary border-bottom border-5">
     <div class="container-fluid">
         <a href="/" class=" navbar-brand fw-bolder">Shop.js</a>
-        <form action="/search" method="GET" class="d-flex">
-            <input type="search" class="form-control me-2" placeholder="Search" name="findName">
-            <a class="navbar-brand me-3" href="/busket"><img width="50" class="img-fluid" src="./image/shopping-online.png" alt=""></a>
+        <ul class="navbar-nav hstack gap-3">
+            <form action="/search" method="GET" class="d-flex">
+                <input type="search" class="form-control me-2" placeholder="Search" name="findName">
+            </form>
+            <a class="navbar-brand me-3" href="/busket"><img width="40" class="img-fluid" src="./image/shopping-online.png" alt=""></a>
             <% if(!user){ %>
-                <ul class="navbar-nav hstack gap-3">
+                <li class="navbar-nav hstack gap-3">
                     <li class="nav-item">
                         <a href="/login" class="nav-link fw-bold">Login</a>
                     </li>
@@ -15,13 +17,18 @@
                     </li>
                 </ul>
             <% }else{ %>
-                <ul class="navbar-nav hstack gap-3">
-                    <li class="nav-item">
-                        <a class="text-decolation-none" href="/profile/:<%= user.id %>"><%= user.name %></a>
-                    </li>
+                <ul class="nav-item">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="toggle"><%= user.name %></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </li>
+                    </ul>
                 </ul>
             <% } %>
-        </form>
-        
+        </ul>
     </div>
 </nav>

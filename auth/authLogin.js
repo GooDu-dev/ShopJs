@@ -1,16 +1,13 @@
-// const { isSessionCreated } = require('./setting')
 const { body } = require('express-validator')
 const db = require('../database/database')
 
 function isLoggedIn(req, res, next){
-    // isSessionCreated(req, res)
     if(!req.session.loggedIn){
         res.redirect('/login')
     }
     next()
 }
 function isNotLoggedIn(req, res, next){
-    // isSessionCreated(req, res)
     if(req.session.loggedIn){
         return res.redirect('/')
     }

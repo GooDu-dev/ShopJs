@@ -4,25 +4,32 @@ const db = require('../database/database')
 const { isLoggedIn, isNotLoggedIn, registerValidation, loginValidation } = require('../auth/authLogin')
 const bcrypt = require('bcrypt')
 const { roles } = require('../database/role')
-const { isSessionCreated } = require('../auth/setting')
 const cookie = require('cookie-session')
 
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
-    console.log(req.session)
-    isSessionCreated(req, res).then(() => {next()}).catch(err => {
-        next()
-    })
-}, (req, res) => {
-    console.log(req.session)
-    user = req.session.userID ? db.execute('SELECT * FROM users WHERE id=?', [req.session.userID]) : null
+router.get('/', (req, res) => {
+    let user = null;
+    if(req.session.userID){
+        db.execute('SELECT * FROM users WHERE id=?', [req.session.userID]).then(([result]) => {
+            user = {
+                name : result[0].name,
+                email : result[0].email,
+                role : result[0].role
+            }
+        })
+    }
     return db.execute('SELECT * FROM products').then(([rows]) => {
         return res.render('index', {
             products : rows,
-            user : req.session.user
+            user : user
         })
     })
+})
+
+router.get('/logout', (req, res) => {
+    req.session = null
+    res.redirect('/')
 })
 
 router.get('/login', isNotLoggedIn, (req, res) => {
