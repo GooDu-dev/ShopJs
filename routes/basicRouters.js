@@ -17,6 +17,8 @@ router.get('/', (req, res) => {
                 email : result[0].email,
                 role : result[0].role
             }
+        }).catch(err=>{
+            res.redirect('/')
         })
     }
     return db.execute('SELECT * FROM products').then(([rows]) => {
